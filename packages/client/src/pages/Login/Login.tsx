@@ -30,10 +30,14 @@ const Login = () => {
                     }
                 >
                     <Typography.Title
+                        level={1}
+                        style={{
+                            fontSize: '32px',
+                            fontWeight: '500'
+                        }}
                         className={styles.title}
-                        level={2}
                     >
-                        Войти
+                        Вход
                     </Typography.Title>
 
                     <Form.Item
@@ -69,11 +73,13 @@ const Login = () => {
                     >
                         <Input 
                             placeholder="Логин"
+                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
+                        style={{fontSize: '10px'}}
                         validateFirst={true}
                         rules={[
                             {
@@ -106,10 +112,13 @@ const Login = () => {
                         <Input.Password
                             type="password"
                             placeholder="Пароль"
+                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
-                    <Form.Item shouldUpdate>
+                    <Form.Item
+                        shouldUpdate
+                    >
                         {() => (
                             <>
                             <Button
@@ -125,7 +134,7 @@ const Login = () => {
                             >
                             Войти
                             </Button>
-                            или <a href="">зарегистрироваться</a>
+                            <a className={styles.link} href="">Еще не зарегистрированы?</a>
                             </>
                         )}
                     </Form.Item>
