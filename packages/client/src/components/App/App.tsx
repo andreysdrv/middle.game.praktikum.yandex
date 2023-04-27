@@ -1,5 +1,7 @@
-import { Landing } from '../../pages/Landing/Landing'
+import React from 'react'
+import { Landing } from '../../pages/Landing/Landing';
+import Login from '../../pages/Login/Login';
 
 export const App = () => {
-  return <Landing />
+  return <Login />
 }
