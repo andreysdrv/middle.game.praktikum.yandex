@@ -14,19 +14,30 @@ interface SigninData {
   password: string
 }
 
+interface User {
+  id: number;
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+  avatar: string;
+}
+
 class AuthApi {
 
   private readonly baseUrl: string
 
-  constructor(baseUrl) {
+  constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  private checkResponse(response) {
+  private checkResponse(response: Response) {
     if (response.ok) {
       return response.json();
     }
-    return Promise.reject(`Ошибка: ${response.status}`);
+    return Promise.reject(response.status);
   }
 
   public signup(signupData: SignupData) {
@@ -66,6 +77,16 @@ class AuthApi {
         login: login,
         password: password,
       }),
+    })
+    .then(this.checkResponse);
+  }
+
+  public fetchUser() {
+    return fetch(`${this.baseUrl}/auth/user`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
     })
     .then(this.checkResponse);
   }

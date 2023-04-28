@@ -1,20 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import AuthApi from '../../../Api/AuthApi';
 // import { Link } from 'react-router-dom';
 // import type { FC } from 'react';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, message } from 'antd';
 import styles from './login.module.css';
 
 
 
 const Login = () => {
-    const [form] = Form.useForm();
+    // const navigate = useNavigate();
+    const [ form ] = Form.useForm();
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log('component did mount');
         return () => {
             console.log('component will unmount')
         }
     }, []);
+
+    const handleSubmit = (data: { login: string, password: string }) => {
+        setIsLoading(true);
+        AuthApi.signin(data)
+            .then(res => {
+                message.success('Авторизация прошла успешно', 3);
+                // setTimeout(() => {
+                //     AuthApi.fetchUser();
+                //     redirect('/');
+                //   }, 1000);
+            })
+            .catch((e) => {
+                if (e === 400) {
+                    message.error('Неверный запрос', 3);
+                } else if (e === 401) {
+                    message.error('Неверный логин или пароль', 3);
+                } else if (e === 500) {
+                    message.error('Произошла ошибка на сервере', 3);
+                }
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }
 
     return (
             <main className={styles.main}>
@@ -25,7 +51,7 @@ const Login = () => {
                     className={styles.form}
                     onFinish={
                         () => {
-                            console.log(form.getFieldsValue())
+                            handleSubmit(form.getFieldsValue())
                         }
                     }
                 >
@@ -126,14 +152,16 @@ const Login = () => {
                                 block
                                 type="primary"
                                 htmlType="submit"
+                                loading={isLoading}
                                 disabled={
                                     !form.isFieldsTouched(true) ||
                                     form.getFieldsError().filter(({ errors }) => errors.length)
                                     .length > 0
                                 }
                             >
-                            Войти
+                                Войти
                             </Button>
+                            {/* Здесь ниже будет реактовский Link вместо html ссылки */}
                             <a className={styles.link} href="">Еще не зарегистрированы?</a>
                             </>
                         )}
