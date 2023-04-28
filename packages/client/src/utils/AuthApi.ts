@@ -1,11 +1,17 @@
-const baseUrl = '';
+const baseUrl = 'https://ya-praktikum.tech/api/v2';
 
 interface SignupData {
-
+  first_name: string
+  second_name: string
+  login: string
+  email: string
+  password: string
+  phone: string
 }
 
 interface SigninData {
-  
+  login: string
+  password: string
 }
 
 class AuthApi {
@@ -24,31 +30,41 @@ class AuthApi {
   }
 
   public signup(signupData: SignupData) {
-    const { } = signupData;
-    return fetch(`${this.baseUrl}/signup`, {
+    const { 
+      first_name,
+      second_name,
+      login,
+      email,
+      password,
+      phone
+    } = signupData;
+    return fetch(`${this.baseUrl}/auth/signup`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: userEmail,
-        password: userPassword,
-        name: userName,
+        first_name: first_name,
+        second_name: second_name,
+        login: login,
+        email: email,
+        password: password,
+        phone: phone
       }),
     })
     .then(this.checkResponse);
   }
 
   public signin(signinData: SigninData) {
-    const {  } = signinData;
-    return fetch(`${this.baseUrl}/signin`, {
+    const { login, password } = signinData;
+    return fetch(`${this.baseUrl}/auth/signin`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: userEmail,
-        password: userPassword,
+        login: login,
+        password: password,
       }),
     })
     .then(this.checkResponse);
