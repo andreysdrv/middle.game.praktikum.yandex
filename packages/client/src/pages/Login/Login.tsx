@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import AuthApi from '../../../Api/AuthApi';
-// import { Link } from 'react-router-dom';
-// import type { FC } from 'react';
+import { Link, redirect } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
 import styles from './login.module.css';
 
 
 
 const Login = () => {
-    // const navigate = useNavigate();
     const [ form ] = Form.useForm();
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
@@ -23,10 +21,10 @@ const Login = () => {
         AuthApi.signin(data)
             .then(res => {
                 message.success('Авторизация прошла успешно', 3);
-                // setTimeout(() => {
-                //     AuthApi.fetchUser();
-                //     redirect('/');
-                //   }, 1000);
+                setTimeout(() => {
+                    AuthApi.fetchUser();
+                    redirect('/game');
+                  }, 1000);
             })
             .catch((e) => {
                 if (e === 400) {
@@ -161,8 +159,7 @@ const Login = () => {
                             >
                                 Войти
                             </Button>
-                            {/* Здесь ниже будет реактовский Link вместо html ссылки */}
-                            <a className={styles.link} href="">Еще не зарегистрированы?</a>
+                            <Link className={styles.link} to='/register'>Еще не зарегистрированы?</Link>
                             </>
                         )}
                     </Form.Item>
@@ -172,4 +169,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export { Login };
