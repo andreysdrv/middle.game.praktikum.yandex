@@ -1,4 +1,4 @@
-const baseUrl = 'https://ya-praktikum.tech/api/v2';
+import { baseUrl } from '../utils/constants';
 
 interface SignupData {
   first_name: string

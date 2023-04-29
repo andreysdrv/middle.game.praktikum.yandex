@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../Api/AuthApi';
+import AuthApi from '../../api/AuthApi';
 import { Link, redirect } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
 import styles from './login.module.css';
