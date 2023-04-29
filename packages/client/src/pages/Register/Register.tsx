@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../Api/AuthApi';
-import { Link, redirect } from 'react-router-dom';
+import AuthApi from '../../api/AuthApi';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
+import { SignupData } from '../../api/AuthApi';
 import styles from './register.module.css';
 
 
 
 const Register = () => {
+    const navigate = useNavigate();
     const [ form ] = Form.useForm();
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
@@ -16,21 +18,21 @@ const Register = () => {
         }
     }, []);
 
-    const handleSubmit = (data: { login: string, password: string }) => {
+    const handleSubmit = (data: SignupData) => {
         setIsLoading(true);
-        AuthApi.signin(data)
-            .then(res => {
-                message.success('Авторизация прошла успешно', 3);
+        AuthApi.signup(data)
+            .then(() => {
+                message.success('Регистрация прошла успешно', 3);
                 setTimeout(() => {
                     AuthApi.fetchUser();
-                    redirect('/game');
+                    navigate('/game');
                   }, 1000);
             })
             .catch((e) => {
                 if (e === 400) {
                     message.error('Неверный запрос', 3);
                 } else if (e === 401) {
-                    message.error('Неверный логин или пароль', 3);
+                    message.error('Нет прав', 3);
                 } else if (e === 500) {
                     message.error('Произошла ошибка на сервере', 3);
                 }
@@ -110,7 +112,7 @@ const Register = () => {
                                    return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(value) ? 
                                     Promise.resolve()
                                     : 
-                                    Promise.reject('Непрвильный формат логина')
+                                    Promise.reject('Непрвильный формат логина');
                                 }
                             })
                         ]}
@@ -144,10 +146,10 @@ const Register = () => {
                             },
                             () => ({
                                 validator(_, value) {
-                                   return /^[A-ZА-ЯЁ]{1}[a-zа-яё]{2,15}$/.test(value) ? 
+                                   return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(value) ? 
                                     Promise.resolve()
                                     : 
-                                    Promise.reject('Никнейм должен начинаться с заглавной')
+                                    Promise.reject('Неправильный формат никнейма');
                                 }
                             })
                         ]}
@@ -181,10 +183,15 @@ const Register = () => {
                             },
                             () => ({
                                 validator(_, value) {
-                                   return /^[A-ZА-ЯЁ]{1}[a-zа-яё]{2,15}$/.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Имя должно начинаться с заглавной')
+                                    if (!/^[A-ZА-ЯЁ]{1}.*$/gm.test(value)) {
+                                        return Promise.reject('Имя должно начинаться с заглавной');
+                                    } else if (!/^(?!.*--)(?!.*-_)(?!.*_-)(?!.*_).*\w$/gm.test(value)) {
+                                        return Promise.reject('Неправильный формат');
+                                    } else if (!/^.*[A-Za-zА-ЯЁа-яё-]$/gm.test(value)) {
+                                        return Promise.reject('Введите буквы');
+                                    } else {
+                                        return Promise.resolve()
+                                    }
                                 }
                             })
                         ]}
@@ -218,10 +225,15 @@ const Register = () => {
                             },
                             () => ({
                                 validator(_, value) {
-                                   return /^[A-ZА-ЯЁ]{1}[a-zа-яё]{2,15}$/.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Фамилия должна начинаться с заглавной')
+                                    if (!/^[A-ZА-ЯЁ]{1}.*$/gm.test(value)) {
+                                        return Promise.reject('Фамилия должна начинаться с заглавной');
+                                    } else if (!/^(?!.*--)(?!.*-_)(?!.*_-)(?!.*_).*\w$/gm.test(value)) {
+                                        return Promise.reject('Неправильный формат');
+                                    } else if (!/^.*[A-Za-zА-ЯЁа-яё-]$/gm.test(value)) {
+                                        return Promise.reject('Введите буквы');
+                                    } else {
+                                        return Promise.resolve()
+                                    }
                                 }
                             })
                         ]}
@@ -258,7 +270,7 @@ const Register = () => {
                                    return /\+?[\d]{10,15}$/.test(value) ? 
                                     Promise.resolve()
                                     : 
-                                    Promise.reject('Непрвильный формат телефона')
+                                    Promise.reject('Введите цифры')
                                 }
                             })
                         ]}
