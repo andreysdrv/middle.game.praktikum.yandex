@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import AuthApi from '../../api/AuthApi';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
 import styles from './login.module.css';
 
 
 
 const Login = () => {
+    const navigate = useNavigate();
     const [ form ] = Form.useForm();
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
@@ -23,7 +24,7 @@ const Login = () => {
                 message.success('Авторизация прошла успешно', 3);
                 setTimeout(() => {
                     AuthApi.fetchUser();
-                    redirect('/game');
+                    navigate('/game');
                   }, 1000);
             })
             .catch((e) => {
