@@ -7,6 +7,7 @@
     background-image: url(../../assets/images/signinPageBg.png);
     background-repeat: no-repeat;
     background-position: center center;
+    background-size: cover;
 }
 
 .form {

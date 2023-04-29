@@ -1,4 +1,4 @@
-const baseUrl = 'https://ya-praktikum.tech/api/v2';
+import { baseUrl } from '../utils/constants';
 
 interface SignupData {
   first_name: string
@@ -14,16 +14,16 @@ interface SigninData {
   password: string
 }
 
-interface User {
-  id: number;
-  first_name: string;
-  second_name: string;
-  login: string;
-  email: string;
-  password: string;
-  phone: string;
-  avatar: string;
-}
+// interface User {
+//   id: number;
+//   first_name: string;
+//   second_name: string;
+//   login: string;
+//   email: string;
+//   password: string;
+//   phone: string;
+//   avatar: string;
+// }
 
 class AuthApi {
 
