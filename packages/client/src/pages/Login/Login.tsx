@@ -19,7 +19,7 @@ const Login = () => {
     const handleSubmit = (data: { login: string, password: string }) => {
         setIsLoading(true);
         AuthApi.signin(data)
-            .then(res => {
+            .then(() => {
                 message.success('Авторизация прошла успешно', 3);
                 setTimeout(() => {
                     AuthApi.fetchUser();
@@ -84,7 +84,7 @@ const Login = () => {
                                 max: 16,
                                 message: 'Введите не более 16 символов'
                             },
-                            ({getFieldValue}) => ({
+                            () => ({
                                 validator(_, value) {
                                    return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(value) ? 
                                     Promise.resolve()
@@ -122,7 +122,7 @@ const Login = () => {
                                 max: 40,
                                 message: 'Введите не более 40 символов'
                             },
-                            ({getFieldValue}) => ({
+                            () => ({
                                 validator(_, value) {
                                    return /^(?=.*?[0-9])(?=.*?[A-Z]).*$/.test(value) ? 
                                     Promise.resolve()
