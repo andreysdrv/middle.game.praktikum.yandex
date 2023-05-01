@@ -1,4 +1,4 @@
-import {  Col, Divider, Row, Form, Modal, Input, Button    } from "antd";
+import {  Col, Divider, Row, Form, Modal, Input, Button, Avatar, Upload, message  } from "antd";
 import styles from './profile.module.css';
 import { useState } from "react";
 import {userData, userStatData} from "./const"
@@ -45,11 +45,28 @@ export const Profile = () => {
         span: 16,
       },
     };
+    const uploadProps = {
+      name: 'file',
+      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+      headers: {
+        authorization: 'authorization-text',
+      },
+      onChange(info: unknown) {
+        if (info.file.status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      },
+    };
     
-  return ( <div className={styles.main}>
+  return ( <main className={styles.main}>
           <div className={styles.block}>
-            <img className={styles.avatar} src={userData.avatar} alt="Avatar"/>
             <>
+              <Avatar size={128} src={userData.avatar} />
               <Divider orientation="left"></Divider>
               <Row justify="space-around">
                 <Col span={4}>Почта</Col>
@@ -63,8 +80,18 @@ export const Profile = () => {
               <Divider orientation="left"></Divider>
               <Row justify="space-around">
                 <Col span={4}>Никнейм</Col>
-                <Col span={4}>{userData.nickname}</Col>
-              </Row>             
+                <Col span={4}>{userData.display_name}</Col>
+              </Row>
+              <Divider orientation="left"></Divider>
+              <Row justify="space-around">
+                <Col span={4}>Имя</Col>
+                <Col span={4}>{userData.first_name}</Col>
+              </Row>
+              <Divider orientation="left"></Divider>
+              <Row justify="space-around">
+                <Col span={4}>Телефон</Col>
+                <Col span={4}>{userData.phone}</Col>
+              </Row>
              <div className={styles.buttonblock}>
                 <Button
                   className={styles.button}
@@ -126,7 +153,7 @@ export const Profile = () => {
                 Отмена
               </Button>,
             ]}>
-              <Form
+          <Form
               {...layout}
               form={formChangeProfile}
               name="change-profile"
@@ -150,7 +177,6 @@ export const Profile = () => {
             <Form.Item              
                 name="login"
                 label="Логин"
-                
                 rules={[
                   {
                     required: true,
@@ -160,16 +186,39 @@ export const Profile = () => {
           <Input defaultValue={userData.login} />
           </Form.Item>
           <Form.Item
-              name="nickname"
+              name="display_name"
               label="Никнейм"
               rules={[
                 {
                   required: true,
                 },
               ]}>
-              <Input  defaultValue={userData.nickname} />
+              <Input  defaultValue={userData.display_name} />
+            </Form.Item>
+            <Form.Item
+              name="first_name"
+              label="Имя"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}>
+              <Input  defaultValue={userData.first_name} />
+            </Form.Item>
+            <Form.Item
+              name="phone"
+              label="Телефон"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}>
+              <Input  defaultValue={userData.phone} />
             </Form.Item>
             <Form.Item {...tailLayout}>
+                <Upload {...uploadProps}>
+                  <Button >Изменить аватар</Button>
+                </Upload>
                 <Button type="primary" htmlType="submit">
                   Сохранить
                 </Button>
@@ -237,7 +286,7 @@ export const Profile = () => {
             </Form.Item>
           </Form>
           </Modal>
-    </div>    
+    </main>    
   )  
 
 };

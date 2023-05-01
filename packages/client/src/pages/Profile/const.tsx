@@ -3,7 +3,9 @@ export type UserProps = {
     avatar: string;
     email: string;
     login: string;
-    nickname: string;
+    display_name: string;
+    first_name: string; 
+    phone: string;
 };
 
 export type UserStatProps = {
@@ -21,7 +23,9 @@ export const userData: UserProps = {
     avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7TjyxXhIkwiNE1996F349Lr8xRDEyQ7r6cA&usqp=CAU",
     email: "email@SizeContext.com",
     login: "UserLogin",
-    nickname: "UserNickname"
+    display_name: "UserNickname",
+    first_name: "Nik",
+    phone: "+79999999999"
 };
 
 export const userStatData: UserStatProps = {
