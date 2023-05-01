@@ -1,14 +1,13 @@
 .main {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     background-image: url(../../assets/images/signupPageBg.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    padding: 50px 0;
 }
 
 .form {
