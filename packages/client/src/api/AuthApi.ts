@@ -1,8 +1,9 @@
 import { baseUrl } from '../utils/constants';
 
-interface SignupData {
+export interface SignupData {
   first_name: string
   second_name: string
+  display_name?: string
   login: string
   email: string
   password: string
@@ -86,7 +87,8 @@ class AuthApi {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
-      }
+      },
+      credentials: 'include'
     })
     .then(this.checkResponse);
   }
