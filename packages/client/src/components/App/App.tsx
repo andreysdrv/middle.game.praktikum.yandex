@@ -9,6 +9,7 @@ import { ServerError } from '../../pages/ServerError'
 import { Login } from '../../pages/Login'
 import { Register } from '../../pages/Register'
 import { Profile } from '../../pages/Profile'
+import { GameScreen } from '../../pages/GameCanvas'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/game',
         element: <Game />,
+      },
+      {
+        path: '/game-screen',
+        element: <GameScreen />,
       },
       {
         path: '/profile',
