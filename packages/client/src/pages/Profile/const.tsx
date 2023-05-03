@@ -17,6 +17,16 @@ export type UserStatProps = {
     winRate: number;
 };
 
+export type FileProps = {
+    fileList: string,
+    file: {
+        name: string,
+        file: string,
+        status: string,
+    }
+}
+
+
 
 export const userData: UserProps = {
     userId: 1,
