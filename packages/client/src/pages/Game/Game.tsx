@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from 'antd'
-import { Unit } from '../../game/Unit'
-import { Engine } from '../../game/Engine'
-import { View } from '../../game/View'
+import { World } from '../../game/Game'
 
 export const Game = () => {
   const [isStarted, setIsStarted] = useState<boolean>(false)
@@ -12,11 +10,10 @@ export const Game = () => {
     if (isStarted) {
       const canvas = canvasRef.current
       if (canvas) {
-        const unit = new Unit(canvas, { x: 160, y: 160 })
-        const game = new Engine()
-        const view = new View(canvas, unit)
-        view.init()
-        game.start()
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const context = canvas.getContext('2d')!
+        const game = new World(canvas, context)
+        game.init()
       }
     }
   }, [isStarted])
