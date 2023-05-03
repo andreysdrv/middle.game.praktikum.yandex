@@ -8,8 +8,10 @@ export const GameStart = () => {
     return <div className={styles.container}>
         <h1 className={styles.container__title}>AWESOME BATTLE CITY</h1>
 
-        {buttons.map(item => {
-           return <Button type="primary" className={styles.container__button}>{item}</Button>
+        {buttons.map((item, index) => {
+            return <div key={index}>
+                <Button type="primary" className={styles.container__button}>{item}</Button>
+            </div>
         })}
     </div>
 }
