@@ -18,11 +18,11 @@ export type UserStatProps = {
 };
 
 export type FileProps = {
-    fileList: string,
+    fileList: unknown,
     file: {
-        name: string,
-        file: string,
-        status: string,
+        name: unknown,
+        file: unknown,
+        status: unknown,
     }
 }
 
