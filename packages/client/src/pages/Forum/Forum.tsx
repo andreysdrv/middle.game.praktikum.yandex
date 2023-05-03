@@ -1,8 +1,8 @@
 import {  Form, Modal, Input, Button, Avatar, List, Skeleton } from "antd";
 import styles from './forum.module.css';
 import { forumItemData } from "./const"
-import { createRoot } from "ReactDOM";
-import {  useEffect, useState  } from "react";
+//import { createRoot } from "react-dom/client";
+import {  useState  } from "react";
 
 
 
