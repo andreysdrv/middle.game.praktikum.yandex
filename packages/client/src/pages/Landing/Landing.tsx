@@ -31,9 +31,11 @@ export const Landing = () => {
       Команда разработки
     </h3>
 
-    <div className={styles.container__teamCircles + ' '  + styles.container__developmentTeam}>
+    <div className={styles.container__teamCircles + ' ' + styles.container__developmentTeam}>
       {developmentTeam.map(item => {
-        return <UserCircle name={item.name} src={item.src} />
+        return <div key={item.name}>
+          <UserCircle name={item.name} src={item.src} />
+        </div>
       })}
     </div>
 
@@ -41,9 +43,11 @@ export const Landing = () => {
       Команда поддержки
     </h3>
 
-    <div className={styles.container__teamCircles + ' '  + styles.container__supportTeam}>
+    <div className={styles.container__teamCircles + ' ' + styles.container__supportTeam}>
       {supportTeam.map(item => {
-        return <UserCircle name={item.name} src={item.src} />
+        return <div key={item.name}>
+          <UserCircle name={item.name} src={item.src} />
+        </div>
       })}
     </div>
   </div>
