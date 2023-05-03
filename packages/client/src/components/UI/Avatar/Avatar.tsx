@@ -1,6 +1,6 @@
 import { Avatar } from "antd"
 import styles from "./styles.module.scss"
-import "./../../../assets/root.css"
+
 interface UserCircleProps {
     name: string,
     src: string,
