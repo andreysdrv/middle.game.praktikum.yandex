@@ -1,4 +1,4 @@
-import {  Col, Divider, Row, Form, Modal, Input, Button, Avatar, Upload, message  } from "antd";
+import {  Col, Divider, Row, Form, Modal, Input, Button, Avatar, Upload, message, UploadFile  } from "antd";
 import styles from './profile.module.css';
 import { useState } from "react";
 import {userData, userStatData, FileProps} from "./const"
@@ -51,7 +51,7 @@ export const Profile = () => {
       headers: {
         authorization: 'authorization-text',
       },
-      onChange(info: UploadChangeParam<UploadFile<any>>) {
+      onChange(info: UploadChangeParam<UploadFile<Any>>) {
         if (info.file.status !== 'uploading') {
           console.log(info.file, info.fileList);
         }
