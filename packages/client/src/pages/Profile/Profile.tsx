@@ -51,7 +51,7 @@ export const Profile = () => {
       headers: {
         authorization: 'authorization-text',
       },
-      onChange(info: FileProps) {
+      onChange(info: UploadChangeParam<UploadFile<any>>) {
         if (info.file.status !== 'uploading') {
           console.log(info.file, info.fileList);
         }
