@@ -21,7 +21,6 @@ export type FileProps = {
     fileList: unknown,
     file: {
         name: unknown,
-        file: unknown,
         status: unknown,
     }
 }
