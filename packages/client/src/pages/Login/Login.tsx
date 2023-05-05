@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AuthApi from '../../api/AuthApi'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Typography, message } from 'antd'
 import styles from './login.module.css'
+import { apiErrorsHandler } from '../../utils/apiErrorsHandler'
+import { LOGIN_REGEXP, PASSWORD_REGEXP } from '../../utils/validationRegExps'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -19,15 +21,7 @@ const Login = () => {
           navigate('/game')
         }, 1000)
       })
-      .catch(e => {
-        if (e === 400) {
-          message.error('Неверный запрос', 3)
-        } else if (e === 401) {
-          message.error('Неверный логин или пароль', 3)
-        } else if (e === 500) {
-          message.error('Произошла ошибка на сервере', 3)
-        }
-      })
+      .catch(apiErrorsHandler)
       .finally(() => {
         setIsLoading(false)
       })
@@ -43,14 +37,7 @@ const Login = () => {
         onFinish={() => {
           handleSubmit(form.getFieldsValue())
         }}>
-        <Typography.Title
-          level={1}
-          // Если записать эти стили в className, то они не применятся (не перезапишутся)
-          style={{
-            fontSize: '32px',
-            fontWeight: '500',
-          }}
-          className={styles.title}>
+        <Typography.Title level={2} className={styles.title}>
           Вход
         </Typography.Title>
 
@@ -74,25 +61,17 @@ const Login = () => {
               max: 16,
               message: 'Введите не более 16 символов',
             },
-            () => ({
-              validator(_, value) {
-                // Если перенести решулярку в отдельную константу в utils, то валидация не отрабатывает
-                // как требуется.
-                return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(
-                  value
-                )
-                  ? Promise.resolve()
-                  : Promise.reject('Непрвильный формат логина')
-              },
-            }),
+            {
+              pattern: LOGIN_REGEXP,
+              message: 'Непрвильный формат логина',
+            },
           ]}
           hasFeedback>
-          <Input placeholder="Логин" style={{ fontSize: '16px' }} />
+          <Input placeholder="Логин" />
         </Form.Item>
 
         <Form.Item
           name="password"
-          style={{ fontSize: '10px' }}
           validateFirst={true}
           rules={[
             {
@@ -111,22 +90,13 @@ const Login = () => {
               max: 40,
               message: 'Введите не более 40 символов',
             },
-            () => ({
-              validator(_, value) {
-                // Если перенести решулярку в отдельную константу в utils, то валидация не отрабатывает
-                // как требуется.
-                return /^(?=.*?[0-9])(?=.*?[A-Z]).*$/.test(value)
-                  ? Promise.resolve()
-                  : Promise.reject('Непрвильный формат пароля')
-              },
-            }),
+            {
+              pattern: PASSWORD_REGEXP,
+              message: 'Непрвильный формат пароля',
+            },
           ]}
           hasFeedback>
-          <Input.Password
-            type="password"
-            placeholder="Пароль"
-            style={{ fontSize: '16px' }}
-          />
+          <Input.Password type="password" placeholder="Пароль" />
         </Form.Item>
 
         <Form.Item shouldUpdate>
