@@ -2,7 +2,7 @@ import {  Col, Divider, Row, Form, Modal, Input, Button, Avatar, Upload, message
 import styles from './profile.module.css';
 import { useState } from "react";
 import {userData, userStatData, FileProps} from "./const"
-
+import { UploadChangeParam } from "antd/es/upload";
 
 export const Profile = () => {
     const [isModalOpenChangeProfile, setIsModalOpenChangeProfile] = useState(false);
