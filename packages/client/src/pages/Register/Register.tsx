@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthApi from '../../api/AuthApi';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
 import { SignupData } from '../../api/AuthApi';
 import styles from './register.module.css';
+import { apiErrorsHandler } from '../../utils/apiErrorsHandler'
+import {
+    LOGIN_REGEXP,
+    PASSWORD_REGEXP,
+    NICKNAME_REGEXP,
+    FIRST_LETTER_CAPITAL,
+    NO_DOBBLE_DASHES_AND_UNDERLINES,
+    ONLY_LETTERS,
+    ONLY_DIGITS,
+} from '../../utils/validationRegExps'
 
 
 
@@ -11,12 +21,6 @@ const Register = () => {
     const navigate = useNavigate();
     const [ form ] = Form.useForm();
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
-
-    useEffect(() => {
-        return () => {
-            console.log('component will unmount')
-        }
-    }, []);
 
     const handleSubmit = (data: SignupData) => {
         setIsLoading(true);
@@ -28,15 +32,7 @@ const Register = () => {
                     navigate('/game');
                   }, 1000);
             })
-            .catch((e) => {
-                if (e === 400) {
-                    message.error('Неверный запрос', 3);
-                } else if (e === 401) {
-                    message.error('Нет прав', 3);
-                } else if (e === 500) {
-                    message.error('Произошла ошибка на сервере', 3);
-                }
-            })
+            .catch(apiErrorsHandler)
             .finally(() => {
                 setIsLoading(false);
             });
@@ -56,11 +52,7 @@ const Register = () => {
                     }
                 >
                     <Typography.Title
-                        level={1}
-                        style={{
-                            fontSize: '32px',
-                            fontWeight: '500'
-                        }}
+                        level={2}
                         className={styles.title}
                     >
                         Регистрация
@@ -83,7 +75,6 @@ const Register = () => {
                     >
                         <Input 
                             placeholder="Почта"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
@@ -107,20 +98,15 @@ const Register = () => {
                                 max: 16,
                                 message: 'Введите не более 16 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                   return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Непрвильный формат логина');
-                                }
-                            })
+                            {
+                                pattern: LOGIN_REGEXP,
+                                message: 'Непрвильный формат логина',
+                            },
                         ]}
                         hasFeedback
                     >
                         <Input 
                             placeholder="Логин"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
@@ -144,20 +130,15 @@ const Register = () => {
                                 max: 16,
                                 message: 'Введите не более 16 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                   return /^(?![\W_|-]{1})(?!.*_-)(?!.*-_)(?!.*--)(?!.*__).[\w-]*(?<!.-|_)$/gi.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Неправильный формат никнейма');
-                                }
-                            })
+                            {
+                                pattern: NICKNAME_REGEXP,
+                                message: 'Непрвильный формат никнейма',
+                            },
                         ]}
                         hasFeedback
                     >
                         <Input 
                             placeholder="Никнейм"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
@@ -181,25 +162,23 @@ const Register = () => {
                                 max: 16,
                                 message: 'Введите не более 16 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                    if (!/^[A-ZА-ЯЁ]{1}.*$/gm.test(value)) {
-                                        return Promise.reject('Имя должно начинаться с заглавной');
-                                    } else if (!/^(?!.*--)(?!.*-_)(?!.*_-)(?!.*_).*\w$/gm.test(value)) {
-                                        return Promise.reject('Неправильный формат');
-                                    } else if (!/^.*[A-Za-zА-ЯЁа-яё-]$/gm.test(value)) {
-                                        return Promise.reject('Введите буквы');
-                                    } else {
-                                        return Promise.resolve()
-                                    }
-                                }
-                            })
+                            {
+                                pattern: FIRST_LETTER_CAPITAL,
+                                message: 'Имя должно начинаться с заглавной',
+                            },
+                            {
+                                pattern: NO_DOBBLE_DASHES_AND_UNDERLINES,
+                                message: 'Неправильный формат',
+                            },
+                            {
+                                pattern: ONLY_LETTERS,
+                                message: 'Введите буквы',
+                            },
                         ]}
                         hasFeedback
                     >
                         <Input 
                             placeholder="Имя"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
@@ -223,25 +202,23 @@ const Register = () => {
                                 max: 16,
                                 message: 'Введите не более 16 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                    if (!/^[A-ZА-ЯЁ]{1}.*$/gm.test(value)) {
-                                        return Promise.reject('Фамилия должна начинаться с заглавной');
-                                    } else if (!/^(?!.*--)(?!.*-_)(?!.*_-)(?!.*_).*\w$/gm.test(value)) {
-                                        return Promise.reject('Неправильный формат');
-                                    } else if (!/^.*[A-Za-zА-ЯЁа-яё-]$/gm.test(value)) {
-                                        return Promise.reject('Введите буквы');
-                                    } else {
-                                        return Promise.resolve()
-                                    }
-                                }
-                            })
+                            {
+                                pattern: FIRST_LETTER_CAPITAL,
+                                message: 'Фамилия должна начинаться с заглавной',
+                            },
+                            {
+                                pattern: NO_DOBBLE_DASHES_AND_UNDERLINES,
+                                message: 'Неправильный формат',
+                            },
+                            {
+                                pattern: ONLY_LETTERS,
+                                message: 'Введите буквы',
+                            }
                         ]}
                         hasFeedback
                     >
                         <Input 
                             placeholder="Фамилия"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
@@ -265,26 +242,20 @@ const Register = () => {
                                 max: 15,
                                 message: 'Введите не более 15 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                   return /\+?[\d]{10,15}$/.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Введите цифры')
-                                }
-                            })
+                            {
+                                pattern: ONLY_DIGITS,
+                                message: 'Введите цифры',
+                            },
                         ]}
                         hasFeedback
                     >
                         <Input 
                             placeholder="Телефон"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
-                        style={{fontSize: '10px'}}
                         validateFirst={true}
                         rules={[
                             {
@@ -303,27 +274,21 @@ const Register = () => {
                                 max: 40,
                                 message: 'Введите не более 40 символов'
                             },
-                            () => ({
-                                validator(_, value) {
-                                   return /^(?=.*?[0-9])(?=.*?[A-Z]).*$/.test(value) ? 
-                                    Promise.resolve()
-                                    : 
-                                    Promise.reject('Непрвильный формат пароля')
-                                }
-                            })
+                            {
+                                pattern: PASSWORD_REGEXP,
+                                message: 'Введите одну заглавную и одну цифру',
+                            },
                         ]}
                         hasFeedback
                     >
                         <Input.Password
                             type="password"
                             placeholder="Пароль"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
                     <Form.Item
                         name="passwordCheck"
-                        style={{fontSize: '10px'}}
                         validateFirst={true}
                         rules={[
                             {
@@ -344,7 +309,6 @@ const Register = () => {
                         <Input.Password
                             type="password"
                             placeholder="Пароль ещё раз"
-                            style={{fontSize: '16px'}}
                         />
                     </Form.Item>
 
