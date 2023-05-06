@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "antd";
 import styles from "./styles.module.scss"
-import "./../../assets/root.css"
 
 export const Game = () => {
   const [buttonsList] = useState<Array<string>>(["Одиночная игра", "Сетевая игра", "Параметры"]);
