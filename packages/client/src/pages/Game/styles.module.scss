@@ -1,5 +1,6 @@
 .container {
     margin-top: 32px;
+    padding: 10px;
 
     display: flex;
     flex-direction: column;
@@ -16,11 +17,31 @@
         line-height: 75px;
         letter-spacing: 0.1em;
         color: var(--text-blue);
+        text-align: center;
     }
 
     &__button {
         width: 345px;
         height: 43px;
         margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .container {
+        &__title {
+            margin-bottom: 140px;
+
+            font-size: 40px;
+        }
+    }
+
+}
+
+@media (max-width: 600px) {
+    .container {
+        &__button {
+            width: 300px;
+        }
     }
 }

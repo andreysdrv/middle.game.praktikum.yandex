@@ -3,7 +3,7 @@ import { Main } from '../../layouts/Main'
 import { Landing } from '../../pages/Landing'
 import { Forum } from '../../pages/Forum'
 import { Leaderboard } from '../../pages/Leaderboard'
-import { GameStart } from '../../pages/Game/GameStart'
+import { Game } from '../../pages/Game'
 import { NotFound } from '../../pages/NotFound'
 import { ServerError } from '../../pages/ServerError'
 import { Login } from '../../pages/Login'
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/game',
-        element: <GameStart />,
+        element: <Game />,
       },
       {
         path: '/profile',
