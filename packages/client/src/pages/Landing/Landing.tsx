@@ -1,7 +1,6 @@
 import { Button } from "antd"
 import { UserCircle } from "../../components/UI/Avatar"
 import styles from "./styles.module.scss"
-import "./../../assets/root.css"
 
 export const Landing = () => {
   const developmentTeam = [
