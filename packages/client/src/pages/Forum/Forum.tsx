@@ -1,7 +1,6 @@
-import {  Form, Modal, Input, Button, Avatar, List, Skeleton } from "antd";
+import {  Form, Modal, Input, Button, List, Skeleton } from "antd";
 import styles from './forum.module.css';
 import { forumItemData } from "./const"
-//import { createRoot } from "react-dom/client";
 import {  useState  } from "react";
 
 
@@ -12,50 +11,6 @@ export const Forum = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
-  // useEffect(() => {
-  //   fetch(fakeDataUrl)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       setInitLoading(false);
-  //       setData(res.results);
-  //       setList(res.results);
-  //     });
-  // }, []);
-
-  /*const onLoadMore = () => {
-    setLoading(true);
-    setList(
-      data.concat(
-        [...new Array(count)].map(() => ({
-          loading: true,
-          name: {},
-          picture: {},
-        })),
-      ),
-    );
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false);
-        window.dispatchEvent(new Event('resize'));
-      });
-    };
-    const loadMore =
-      !initLoading && !loading ? (
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: 12,
-            height: 32,
-            lineHeight: '32px',
-          }}
-        >
-          <Button onClick={onLoadMore}>loading more</Button>
-        </div>
-      ) : null;*/
 
 
   const [isModalOpenAddPost, setIsModalOpenAddPost] = useState(false);
@@ -88,15 +43,15 @@ export const Forum = () => {
 
   return <div className={styles.main}>
         <div className={styles.button}>
-              <Button
-                  className={styles.button}
-                  block
-                  type="primary"
-                  htmlType="submit"
-                  onClick={showModalAddPost}
-                  >
-                  Создать тему
-              </Button>
+          <Button
+              className={styles.button}
+              block
+              type="primary"
+              htmlType="submit"
+              onClick={showModalAddPost}
+              >
+              Создать тему
+          </Button>
         </div>
         <div className={styles.title}>
           <List
@@ -113,11 +68,9 @@ export const Forum = () => {
               avatar title={false} loading={false} 
               active>
                 <List.Item.Meta
-                  // avatar={<Avatar src={item.picture.large} />}
                   title={item.description}
                   description={item.content}
-                />
-                {/* <div>content</div> */}
+                />               
               </Skeleton>
             </List.Item>
           )}
