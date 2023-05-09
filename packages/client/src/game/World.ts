@@ -1,6 +1,7 @@
 import { View } from './View'
 import { Enemy } from './Enemy'
 import { Player } from './Player'
+import { INITIAL_POSITIONS } from './config'
 
 export class World {
   view: View
@@ -14,7 +15,7 @@ export class World {
     this.player = {} as Player
     this.enemies = []
     this.spawnPlayer(canvas, context)
-    this.spawnEnemy(canvas, context)
+    this.spawnEnemies(canvas, context)
     this.setEventListeners()
   }
 
@@ -40,16 +41,12 @@ export class World {
   }
 
   private spawnPlayer(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
-    this.player = new Player(canvas, context, { x: 160, y: 160 })
+    this.player = new Player(canvas, context, INITIAL_POSITIONS(canvas).PLAYER)
     this.player.render()
   }
 
-  private spawnEnemy(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
-    [
-      { x: 0, y: 0 },
-      { x: canvas.width / 2 - 40, y: 0 },
-      { x: canvas.width - 80, y: 0 },
-    ].forEach(position => {
+  private spawnEnemies(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+    INITIAL_POSITIONS(canvas).ENEMIES.forEach(position => {
       this.enemies.push(new Enemy(canvas, context, position))
     })
 
