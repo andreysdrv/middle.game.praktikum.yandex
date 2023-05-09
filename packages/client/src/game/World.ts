@@ -5,23 +5,17 @@ import { Player } from './Player'
 export class World {
   view: View
   player: Player
-  enemy1: Enemy
-  enemy2: Enemy
-  enemy3: Enemy
+  enemies: Enemy[]
 
   constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     this.loop = this.loop.bind(this)
     this.view = new View(canvas, context)
     this.view.init()
-    this.player = new Player(canvas, context, { x: 160, y: 160 })
-    this.player.render()
+    this.player = {} as Player
+    this.enemies = []
+    this.spawnPlayer(canvas, context)
+    this.spawnEnemy(canvas, context)
     this.setEventListeners()
-    this.enemy1 = new Enemy(canvas, context, { x: 0, y: 0 })
-    this.enemy2 = new Enemy(canvas, context, { x: canvas.width / 2 - 40, y: 0 })
-    this.enemy3 = new Enemy(canvas, context, { x: canvas.width - 80, y: 0 })
-    this.enemy1.render()
-    this.enemy2.render()
-    this.enemy3.render()
   }
 
   public setEventListeners() {
@@ -45,12 +39,27 @@ export class World {
     })
   }
 
+  private spawnPlayer(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+    this.player = new Player(canvas, context, { x: 160, y: 160 })
+    this.player.render()
+  }
+
+  private spawnEnemy(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+    [
+      { x: 0, y: 0 },
+      { x: canvas.width / 2 - 40, y: 0 },
+      { x: canvas.width - 80, y: 0 },
+    ].forEach(position => {
+      this.enemies.push(new Enemy(canvas, context, position))
+    })
+
+    this.enemies.forEach((enemy) => enemy.render())
+  }
+
   private rerender() {
     this.view.update()
     this.player.render()
-    this.enemy1.render()
-    this.enemy2.render()
-    this.enemy3.render()
+    this.enemies.forEach((enemy) => enemy.render())
   }
 
   public init() {
