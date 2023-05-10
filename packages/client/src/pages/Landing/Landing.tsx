@@ -1,20 +1,21 @@
+import { FC } from "react"
 import { Button } from "antd"
 import { UserCircle } from "../../components/UI/Avatar"
 import styles from "./styles.module.scss"
 
-export const Landing = () => {
-  const developmentTeam = [
-    { name: "Пронин Игорь", src: "public/landingPage/gosha.svg" },
-    { name: "Участник 2", src: "" },
-    { name: "Участник 3", src: "" },
-    { name: "Участник 4", src: "" },
-  ];
+const DEVELOPMENT_TEAM = [
+  { name: "Пронин Игорь", src: "public/landingPage/gosha.svg" },
+  { name: "Участник 2", src: "" },
+  { name: "Участник 3", src: "" },
+  { name: "Участник 4", src: "" },
+];
 
-  const supportTeam = [
-    { name: "Участник 1", src: "" },
-    { name: "Участник 2", src: "" },
-  ];
+const supportTeam = [
+  { name: "Участник 1", src: "" },
+  { name: "Участник 2", src: "" },
+];
 
+export const Landing: FC = () => {
   return (
     <div>
       <div className={styles.container}>
@@ -33,7 +34,7 @@ export const Landing = () => {
         </h3>
 
         <div className={styles.container__teamCircles + ' ' + styles.container__developmentTeam}>
-          {developmentTeam.map(item => {
+          {DEVELOPMENT_TEAM.map(item => {
             return <div key={item.name}>
               <UserCircle name={item.name} src={item.src} />
             </div>
