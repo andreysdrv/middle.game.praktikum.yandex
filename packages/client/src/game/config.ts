@@ -1,6 +1,6 @@
 type Coords = { x: number; y: number }
 
-export const INITIAL_POSITIONS: (canvas: HTMLCanvasElement) => {
+export const getInitialPositions: (canvas: HTMLCanvasElement) => {
   ENEMIES: Coords[]
   PLAYER: Coords
 } = (canvas: HTMLCanvasElement) => ({
