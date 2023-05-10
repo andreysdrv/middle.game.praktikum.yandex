@@ -10,7 +10,7 @@ const DEVELOPMENT_TEAM = [
   { name: "Участник 4", src: "" },
 ];
 
-const supportTeam = [
+const SUPPORT_TEAM = [
   { name: "Участник 1", src: "" },
   { name: "Участник 2", src: "" },
 ];
@@ -46,7 +46,7 @@ export const Landing: FC = () => {
         </h3>
 
         <div className={styles.container__teamCircles + ' ' + styles.container__supportTeam}>
-          {supportTeam.map(item => {
+          {SUPPORT_TEAM.map(item => {
             return <div key={item.name}>
               <UserCircle name={item.name} src={item.src} />
             </div>
