@@ -87,4 +87,6 @@ export const Game = () => {
       </section>
     )
   }
+
+  return <></>
 }
