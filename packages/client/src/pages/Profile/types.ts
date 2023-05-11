@@ -25,3 +25,11 @@ export type FileProps = {
     }
 }
 
+export type ModalChangeProfileProps = {
+    isModalOpenChangeProfile: boolean,
+    handleCancelChangeProfile: () => void,
+    formChangeProfile: () => void,
+    onFinishChangeProfile: () =>  void
+};
+
+
