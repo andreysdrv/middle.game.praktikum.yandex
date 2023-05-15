@@ -7,8 +7,7 @@
 
   &__title {
     margin: 0;
-
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 48px;
@@ -28,10 +27,8 @@
   }
 
   &__subtitle {
-    margin: 0;
-    margin-bottom: 132px;
-
-    font-family: 'Roboto';
+    margin: 0 0 132px;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 32px;
@@ -40,10 +37,8 @@
   }
 
   &__team {
-    margin: 0 auto;
-    margin-bottom: 37px;
-
-    font-family: 'Roboto';
+    margin: 0 auto 37px;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 32px;

@@ -4,7 +4,7 @@ import { UserCircle } from '../../components/UI/Avatar'
 import styles from './styles.module.scss'
 
 const DEVELOPMENT_TEAM = [
-  { name: 'Пронин Игорь', src: 'public/landingPage/gosha.svg' },
+  { name: 'Пронин Игорь', src: '' },
   { name: 'Участник 2', src: '' },
   { name: 'Участник 3', src: '' },
   { name: 'Участник 4', src: '' },
