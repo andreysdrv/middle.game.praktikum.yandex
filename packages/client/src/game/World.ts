@@ -42,16 +42,27 @@ export class World {
         this.player.moveRight()
       }
 
-      if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+      if (
+        e.code === 'ArrowUp' ||
+        e.code === 'ArrowDown' ||
+        e.code === 'ArrowLeft' ||
+        e.code === 'ArrowRight'
+      ) {
         for (let i = 0; i < this.enemies.length; i++) {
-          if (this.identifyHits(this.enemies[i], this.player, this.player.direction)) {
+          if (
+            this.identifyHits(
+              this.enemies[i],
+              this.player,
+              this.player.direction
+            )
+          ) {
             const savedPlayerDirection = this.player.direction
-            this.tankGoBack();
-            this.player.direction = savedPlayerDirection;
-            break;
+            this.tankGoBack()
+            this.player.direction = savedPlayerDirection
+            break
           }
         }
-        this.rerender();
+        this.rerender()
       }
 
       if (e.code === 'Space') {
@@ -64,11 +75,7 @@ export class World {
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D
   ) {
-    this.player = new Player(
-      canvas,
-      context,
-      getInitialPositions().PLAYER
-    )
+    this.player = new Player(canvas, context, getInitialPositions().PLAYER)
     this.player.render()
   }
 
@@ -87,50 +94,57 @@ export class World {
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D
   ) {
-    const bulletStartPosition = this.createBulletStartPosition();
-    const bullet = new Bullet(canvas, context, bulletStartPosition);
+    const bulletStartPosition = this.createBulletStartPosition()
+    const bullet = new Bullet(canvas, context, bulletStartPosition)
     this.bullets.push(bullet)
-    this.animateBullet(bullet, this.player.direction);
+    this.animateBullet(bullet, this.player.direction)
   }
 
   public animateBullet(bullet: Bullet, bulletDirection: string) {
     // bullet[bulletDirection]();
     switch (bulletDirection) {
-      case ('moveUp'):
-        bullet.moveUp();
-        break;
+      case 'moveUp':
+        bullet.moveUp()
+        break
 
-      case ('moveDown'):
-        bullet.moveDown();
-        break;
+      case 'moveDown':
+        bullet.moveDown()
+        break
 
-      case ('moveLeft'):
-        bullet.moveLeft();
-        break;
+      case 'moveLeft':
+        bullet.moveLeft()
+        break
 
-      case ('moveRight'):
-        bullet.moveRight();
-        break;
+      case 'moveRight':
+        bullet.moveRight()
+        break
     }
 
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.identifyHits(this.enemies[i], bullet, bulletDirection)) {
-        bullet.flying = false;
-        this.enemies.splice(i, 1);
-        break;
+        bullet.flying = false
+        this.enemies.splice(i, 1)
+        break
       }
     }
 
     this.rerender()
 
     if (bullet.flying) {
-      requestAnimationFrame(this.animateBullet.bind(this, bullet, bulletDirection));
+      requestAnimationFrame(
+        this.animateBullet.bind(this, bullet, bulletDirection)
+      )
     }
-  };
+  }
 
   private identifyHits(enemy: Enemy, object: Bullet | Tank, direction: string) {
-    const objectClass = object.constructor.name === 'Bullet' ? Bullet : Tank;
-    if (object.position.y < enemy.position.y + Tank.size && object.position.y + objectClass.size > enemy.position.y && object.position.x + objectClass.size > enemy.position.x && enemy.position.x + Tank.size > object.position.x) {
+    const objectClass = object.constructor.name === 'Bullet' ? Bullet : Tank
+    if (
+      object.position.y < enemy.position.y + Tank.size &&
+      object.position.y + objectClass.size > enemy.position.y &&
+      object.position.x + objectClass.size > enemy.position.x &&
+      enemy.position.x + Tank.size > object.position.x
+    ) {
       return true
     }
   }
@@ -141,43 +155,41 @@ export class World {
         x: this.player.position.x + (Tank.size - Bullet.size) / 2,
         y: this.player.position.y,
       }
-    } else
-      if (this.player.direction === 'moveDown') {
-        return {
-          x: this.player.position.x + (Tank.size - Bullet.size) / 2,
-          y: this.player.position.y + Tank.size,
-        }
-      } else
-        if (this.player.direction === 'moveLeft') {
-          return {
-            x: this.player.position.x,
-            y: this.player.position.y + (Tank.size - Bullet.size) / 2,
-          }
-        } else {
-          return {
-            x: this.player.position.x + Tank.size,
-            y: this.player.position.y + (Tank.size - Bullet.size) / 2,
-          }
-        }
+    } else if (this.player.direction === 'moveDown') {
+      return {
+        x: this.player.position.x + (Tank.size - Bullet.size) / 2,
+        y: this.player.position.y + Tank.size,
+      }
+    } else if (this.player.direction === 'moveLeft') {
+      return {
+        x: this.player.position.x,
+        y: this.player.position.y + (Tank.size - Bullet.size) / 2,
+      }
+    } else {
+      return {
+        x: this.player.position.x + Tank.size,
+        y: this.player.position.y + (Tank.size - Bullet.size) / 2,
+      }
+    }
   }
 
   private tankGoBack() {
     switch (this.player.direction) {
-      case ('moveUp'):
-        this.player.moveDown();
-        break;
+      case 'moveUp':
+        this.player.moveDown()
+        break
 
-      case ('moveDown'):
-        this.player.moveUp();
-        break;
+      case 'moveDown':
+        this.player.moveUp()
+        break
 
-      case ('moveLeft'):
-        this.player.moveRight();
-        break;
+      case 'moveLeft':
+        this.player.moveRight()
+        break
 
-      case ('moveRight'):
-        this.player.moveLeft();
-        break;
+      case 'moveRight':
+        this.player.moveLeft()
+        break
     }
   }
 
@@ -185,7 +197,7 @@ export class World {
     this.view.update()
     this.player.render()
     this.enemies.forEach(enemy => enemy.render())
-    this.bullets = this.bullets.filter((item) => item.flying);
+    this.bullets = this.bullets.filter(item => item.flying)
     this.bullets.forEach(bullet => bullet.render())
   }
 
